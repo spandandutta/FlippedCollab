@@ -1,0 +1,125 @@
+{% extends 'admin/model/list.html' %}
+
+{% block main_content_block %}
+
+<br>
+<div class="text-left">
+    <div>
+    <h5>{{ get_value(model, 'title') }} &nbsp;&nbsp; <span class="badge rounded-pill bg-secondary">{{ get_value(model, 'url') }}</span></h5>
+    </div>
+    <h6 class="text-muted">{{ get_value(model, 'author') }}</h6>
+</div>
+<div>
+<ul class="nav nav-tabs" id="detailsTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="transcript-tab" data-bs-toggle="tab" data-bs-target="#transcript" type="button" role="tab" aria-controls="transcript" aria-selected="true">Transcript</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary" type="button" role="tab" aria-controls="summary" aria-selected="false">Summary</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="qna-tab" data-bs-toggle="tab" data-bs-target="#qna" type="button" role="tab" aria-controls="qna" aria-selected="false">Q&A</button>
+    </li>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <li>
+      <!-- <form class="form-inline">
+      <div class="form-group">
+        <select class="form-select">
+          <option selected>Select a friend to share</option>
+          {% for user_name in user_names %}
+          <option value="{{ user_name }}">{{ user_name }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-primary">Share</button>
+      </div>
+      </form> -->
+      <form>
+      <div class="form-group">
+        <div class="input-group">
+          <select class="form-select">
+            <option selected>Select a friend to share</option>
+            {% for user_name in user_names %}
+            <option value="{{ user_name }}">{{ user_name }}</option>
+            {% endfor %}
+          </select>
+          &nbsp;
+            <span class="input-group-btn">
+              <button type="submit" class="btn btn-primary">Share</button>
+              &nbsp;&nbsp;
+              <input type="text" placeholder="Enter email address">
+              <button class="btn btn-primary">Email</button>
+            </span>
+        </div>
+      </div>
+      </form>
+
+    </li>
+</ul>
+<div class="tab-content" id="detailsContent">
+    <div class="tab-pane fade show active" style="overflow-y:scroll; width:100%; height:680px;" id="transcript" role="tabpanel" aria-labelledby="transcript-tab"><br>{{ get_value(model, 'transcript') }}</div>
+    <div class="tab-pane fade" id="summary" role="tabpanel" aria-labelledby="summary-tab"><span style="white-space: pre-wrap;"> <br> {{ get_value(model, 'summary') }} </span></div>
+    <div class="tab-pane fade" style="overflow-y:scroll; width:100%; height:680px;" id="qna" role="tabpanel" aria-labelledby="qna-tab">
+      <div style="overflow-y:scroll; width:100%; height:600px;">
+          <div class="chat-view">
+                  <div>
+                      <br>
+                      <div><h5 style="color: cornflowerblue;">Q&A within this topic</h5></div>
+                      <br>
+                  </div>
+          </div>
+      <br>
+      <br>
+    </div>
+
+    <br>
+
+    <div class="w-75 justify-content-center">
+      <div class="input-group">
+        <input type="text" id="my-text" class="form-control" placeholder="Type your question..." aria-describedby="basic-addon1" style="border-color: coral;">
+        <span class="input-group-text" id="basic-addon1" style="border-color: coral;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+            <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+          </svg>
+        </span>
+  
+      </div>
+    </div>
+    <input type="hidden" id="uniqueId" name="uniqueId" value="{{ get_value(model, 'unique_id') }}" />
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script>
+        function getBotResponse(){
+            var myText = $("#my-text").val();
+            var uniqueId = $("#uniqueId").val();
+            var userBubble = '<div class="w-75 p-2" style="border-radius: .75rem; background-color: #EDECEE"><img src="/static/image/user.png" alt="" width="32" height="32" class="rounded-circle me-2">'+ myText +'</div>';
+            $("#my-text").val("");
+            $(".chat-view").append(userBubble);
+            $(".chat-view").stop().animate({scrollTop: $(".chat-view")[0].scrollHeight}, 1000);
+  
+            $.get("/flipcolab/video/get_chat", {question: myText,  uniqueId: uniqueId}).done(function(data){
+                var botBubble = '<br><div class="w-75 p-2 text-white" style="border-radius: .75rem; background-color: #6188EE"><img src="/static/image/robot.png" alt="" width="32" height="32" class="rounded-circle me-2">'+ data +'</div><br>';
+                $(".chat-view").append(botBubble);
+            }); 
+        }
+        $("#my-text").keypress(function(e){
+            if (e.which == 13){
+                getBotResponse();
+          }
+      });
+      </script>
+
+
+    </div>
+</div>
+</div>
+
+{% endblock %}

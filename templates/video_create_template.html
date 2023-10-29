@@ -1,0 +1,35 @@
+{% extends 'admin/model/create.html' %}
+
+{% block main_content_block %}
+<br>
+
+<form action="" method="POST" class="admin-form form-horizontal" enctype="multipart/form-data">
+    <fieldset>
+<div class="control-group">
+  <div class="control-label">
+    <label for="url" class="form-label"><strong>Url</strong></label>
+  </div>
+  <div class="controls">
+  <div>
+    <input class="form-control" id="url" maxlength="512" name="url" type="text" value="" style="width: 700px;" required>
+  </div>
+  <div id="emailHelp" class="form-text">Type in the Url of the video above.</div>
+  
+  </div>
+  
+</div>
+<br>
+
+  <div class="control-group">
+    <div class="controls">
+      <input type="submit" class="btn btn-primary" style="width: 150px;" value="Save" />
+      &nbsp;&nbsp;
+    <a href="/flipcolab/video/" class="btn btn-secondary" style="width: 150px;" >Cancel</a>
+    </div>
+  </div>
+
+  
+    </fieldset>
+  </form>
+
+{% endblock %}

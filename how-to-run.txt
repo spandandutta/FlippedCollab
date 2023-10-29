@@ -1,0 +1,8 @@
+$ mkdir flip-colab-app
+$ cd flip-colab-app
+
+$ python -m virtualenv flip-colab-venv
+$ source flip-colab-venv/bin/activate
+$ pip install -r requirements.txt
+$ export OPENAI_API_KEY="..." (need to setup the actual key)
+$ python flip-colab-app.py

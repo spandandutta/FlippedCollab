@@ -1,0 +1,61 @@
+{% extends 'admin/index.html' %}
+
+{% block nav_bar_home_menu %}
+<li class="nav-item">
+  <a href="/flipcolab/" class="nav-link active" aria-current="page">
+    <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+    Home
+  </a>
+</li>
+{% endblock %}
+
+{% block nav_bar_video_menu %}
+{% endblock %}
+
+{% block logged_in_user %}
+{% endblock %}
+
+{% block register_block %}
+{% endblock %}
+
+{% block main_content_block %}
+
+<br>
+<br>
+
+<div class="container d-flex align-items-center justify-content-center">
+  <form name="login" action="{{ url_for('.register_view') }}" method="POST">
+    <div>
+      <img src="{{ url_for('static', filename='image/register.png') }}" alt="Create Account" width="60" height="60" style="display: block; margin-left: auto; margin-right: auto;">
+    </div>
+    <br>
+
+    {% if register_error %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{ register_error }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <br>
+    {% endif %}
+
+    <div class="form-outline mb-3">
+      <input type="text" id="formfname" name="formfname" class="form-control" placeholder="First name" style="width: 500px;" required/>
+    </div>
+    <div class="form-outline mb-3">
+      <input type="text" id="formlname" name="formlname" class="form-control" placeholder="Last name" style="width: 500px;" required/>
+    </div>
+    <div class="form-outline mb-3">
+      <input type="email" id="formemail" name="formemail" class="form-control" placeholder="Email address" style="width: 500px;" required/>
+    </div>
+    <div class="form-outline mb-3">
+      <input type="password" id="formpassword" name="formpassword" class="form-control" placeholder="Password" style="width: 500px;" required/>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block mb-4" style="width: 244px;">Create Account</button>
+    &nbsp;
+    <a href="{{ url_for('.index') }}"><button type="button" class="btn btn-secondary btn-block mb-4" style="width: 243px;">Cancel</button></a>
+
+  </form>
+</div>
+
+{% endblock %}

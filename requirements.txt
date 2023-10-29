@@ -1,0 +1,11 @@
+Flask==2.3.2
+Flask-Admin==1.6.1
+Flask-Login==0.6.2
+Flask-SQLAlchemy==2.5.1
+Flask-WTF==1.1.1
+Flask-Babel==2.0.0
+SQLAlchemy==1.4.49
+pytube==15.0.0
+openai-whisper==20230314
+Werkzeug==2.3.6
+openai==0.28.1

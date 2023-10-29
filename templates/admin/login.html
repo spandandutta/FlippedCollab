@@ -1,0 +1,67 @@
+{% extends 'admin/index.html' %}
+
+{% block nav_bar_home_menu %}
+<li class="nav-item">
+  <a href="/flipcolab/" class="nav-link active" aria-current="page">
+    <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+    Home
+  </a>
+</li>
+{% endblock %}
+
+{% block nav_bar_video_menu %}
+{% endblock %}
+
+{% block logged_in_user %}
+{% endblock %}
+
+{% block login_block %}
+{% endblock %}
+
+{% block register_block %}
+<form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+  <a href="/flipcolab/register/" id="registerbutton"> <button class="btn btn-warning" id="btnNavbarLogin" type="button">Create Account</button></a>
+</form>
+{% endblock %}
+
+
+{% block main_content_block %}
+
+<br>
+<br>
+
+<div class="container d-flex align-items-center justify-content-center">
+  <form name="login" action="{{ url_for('.login_view') }}" method="POST">
+    <div>
+      <img src="{{ url_for('static', filename='image/login.svg') }}" alt="Sign in" width="50" height="50" style="display: block; margin-left: auto; margin-right: auto;">
+    </div>
+    <br>
+
+    {% if loging_error %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{ loging_error }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <br>
+    {% endif %}  
+    <!-- Email input -->
+    <div class="form-outline mb-3">
+      <input type="email" id="formemail" name="formemail" class="form-control" placeholder="Email address" style="width: 500px;" required/>
+    </div>
+
+    <!-- Password input -->
+    <div class="form-outline mb-3">
+      <input type="password" id="formpassword" name="formpassword" class="form-control" placeholder="Password" style="width: 500px;" required/>
+    </div>
+
+    <!-- Submit button -->
+    <div class="form-outline mb-3">
+    <button type="submit" class="btn btn-primary btn-block mb-4" style="width: 244px;">Sign in</button>
+    &nbsp;
+    <a href="{{ url_for('.index') }}"><button type="button" class="btn btn-secondary btn-block mb-4" style="width: 243px;">Cancel</button></a>
+    </div>
+
+  </form>
+</div>
+
+{% endblock %}
